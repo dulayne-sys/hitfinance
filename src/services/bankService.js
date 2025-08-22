@@ -43,6 +43,13 @@ class BankConnectionService {
         features: ['checking', 'savings', 'credit']
       },
       {
+        id: 'truist',
+        name: 'Truist Bank',
+        logo: 'https://logos-world.net/wp-content/uploads/2021/02/Truist-Logo.png',
+        type: 'major',
+        features: ['checking', 'savings', 'credit', 'investment', 'zelle']
+      },
+      {
         id: 'usbank',
         name: 'U.S. Bank',
         logo: 'https://logos-world.net/wp-content/uploads/2021/02/US-Bank-Logo.png',
