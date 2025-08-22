@@ -29,7 +29,7 @@ import {
   Zap, 
   CheckCircle, 
   AlertTriangle,
-  Sync,
+  RotateCcw,
   Trash2,
   Eye,
   Lock,
@@ -538,7 +538,7 @@ export const BankConnectionScreen = ({ userId }) => {
                     {syncingConnection === connection.id ? (
                       <CircularProgress size={20} color="inherit" />
                     ) : (
-                      <Sync size={20} />
+                      <RotateCcw size={20} />
                     )}
                   </IconButton>
                   <IconButton
