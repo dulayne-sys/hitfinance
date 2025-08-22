@@ -8,9 +8,11 @@ import { Box } from '@mui/material';
 import { DashboardScreen } from './screens/Dashboard/DashboardScreen';
 import { LedgerScreen } from './screens/Ledger/LedgerScreen';
 import { ExpenseScreen } from './screens/Expenses/ExpenseScreen';
+import { BankConnectionScreen } from './screens/BankConnection/BankConnectionScreen.jsx';
 import { ForecastScreen } from './screens/Forecast/ForecastScreen';
 import { AIAnalysisScreen } from './screens/AIAnalysis/AIAnalysisScreen.jsx';
 import { DocumentationScreen } from './screens/Documentation/DocumentationScreen';
+import { HelpScreen } from './screens/Help/HelpScreen';
 import { LoginScreen } from './screens/Login/LoginScreen';
 import { Sidebar } from './components/Sidebar/Sidebar';
 
@@ -87,12 +89,16 @@ export default function App() {
         return <LedgerScreen userId={user.uid} />;
       case 'expenses':
         return <ExpenseScreen userId={user.uid} />;
+      case 'bank-connect':
+        return <BankConnectionScreen userId={user.uid} />;
       case 'forecast':
         return <ForecastScreen userId={user.uid} />;
       case 'ai-analysis':
         return <AIAnalysisScreen userId={user.uid} />;
       case 'documentation':
         return <DocumentationScreen userId={user.uid} />;
+      case 'help':
+        return <HelpScreen userId={user.uid} />;
       default:
         return <DashboardScreen userId={user.uid} />;
     }

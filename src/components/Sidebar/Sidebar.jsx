@@ -1,14 +1,16 @@
 import React from 'react';
 import { Box, Stack, Typography, Button, Avatar } from '@mui/material';
-import { BarChart2, DollarSign, TrendingUp, FileText, LogOut, Receipt, Brain } from 'lucide-react';
+import { BarChart2, DollarSign, TrendingUp, FileText, LogOut, Receipt, Brain, HelpCircle, CreditCard } from 'lucide-react';
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: BarChart2 },
   { id: 'ledger', label: 'Finance Ledger', icon: DollarSign },
   { id: 'expenses', label: 'Expense Manager', icon: Receipt },
+  { id: 'bank-connect', label: 'Bank Connections', icon: CreditCard },
   { id: 'forecast', label: 'Forecasts', icon: TrendingUp },
   { id: 'ai-analysis', label: 'AI Financial Analysis', icon: Brain },
   { id: 'documentation', label: 'Documentation', icon: FileText },
+  { id: 'help', label: 'Help & FAQ', icon: HelpCircle },
 ];
 
 export const Sidebar = ({ activeTab, setActiveTab, handleLogout, user }) => {
