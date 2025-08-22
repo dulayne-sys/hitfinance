@@ -1,12 +1,16 @@
 import React from 'react';
-import { Box, Typography, Stack, Card, CardContent } from '@mui/material';
+import { Box, Typography, Stack, Card, CardContent, Fab } from '@mui/material';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Brain } from 'lucide-react';
 import { db } from '../../App';
+import { AIChat } from '../../components/AIChat/AIChat';
 
-export const DashboardScreen = ({ userId }) => {
+export const DashboardScreen = ({ userId, user }) => {
   const [ledger, setLedger] = React.useState([]);
   const [expenses, setExpenses] = React.useState([]);
+  const [showAIChat, setShowAIChat] = React.useState(false);
+  const [isAIChatMinimized, setIsAIChatMinimized] = React.useState(false);
 
   React.useEffect(() => {
     if (!userId) return;
@@ -59,6 +63,23 @@ export const DashboardScreen = ({ userId }) => {
       Revenue: item.type === 'revenue' ? item.amount : 0,
       Cost: item.type === 'cost' ? item.amount : 0,
     }));
+
+  // Prepare financial data for AI Chat
+  const financialData = {
+    totalRevenue,
+    totalCosts: totalCost,
+    totalExpenses,
+    netProfit,
+    profitMargin: totalRevenue > 0 ? (netProfit / totalRevenue) * 100 : 0,
+    recentTransactions: [...ledger, ...expenses].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10),
+    expenseBreakdown: expenses.reduce((acc, expense) => {
+      const category = expense.category || 'other';
+      acc[category] = (acc[category] || 0) + parseFloat(expense.amount || 0);
+      return acc;
+    }, {})
+  };
+
+  const userName = user?.displayName?.split(' ')[0] || 'User';
 
   return (
     <Box sx={{ width: "100%", position: "relative" }}>
@@ -363,6 +384,45 @@ export const DashboardScreen = ({ userId }) => {
           </ResponsiveContainer>
         </Box>
       </Card>
+
+      {/* AI Chat Floating Action Button */}
+      {!showAIChat && (
+        <Fab
+          onClick={() => setShowAIChat(true)}
+          sx={{
+            position: 'fixed',
+            bottom: 20,
+            right: 20,
+            background: 'linear-gradient(135deg, rgba(62,121,229,1) 0%, rgba(1,184,227,1) 100%)',
+            color: 'white',
+            width: 60,
+            height: 60,
+            '&:hover': {
+              background: 'linear-gradient(135deg, rgba(62,121,229,0.8) 0%, rgba(1,184,227,0.8) 100%)',
+              transform: 'scale(1.1)',
+            },
+            transition: 'all 0.3s ease',
+            boxShadow: '0 8px 25px rgba(61,122,229,0.3)',
+          }}
+        >
+          <Brain size={28} />
+        </Fab>
+      )}
+
+      {/* AI Chat Component */}
+      {showAIChat && (
+        <AIChat
+          userId={userId}
+          userName={userName}
+          financialData={financialData}
+          isMinimized={isAIChatMinimized}
+          onToggleMinimize={() => setIsAIChatMinimized(!isAIChatMinimized)}
+          onClose={() => {
+            setShowAIChat(false);
+            setIsAIChatMinimized(false);
+          }}
+        />
+      )}
     </Box>
   );
 };

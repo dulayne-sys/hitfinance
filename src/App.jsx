@@ -84,7 +84,7 @@ export default function App() {
   const renderPageContent = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <DashboardScreen userId={user.uid} />;
+        return <DashboardScreen userId={user.uid} user={user} />;
       case 'ledger':
         return <LedgerScreen userId={user.uid} />;
       case 'expenses':
@@ -100,7 +100,7 @@ export default function App() {
       case 'help':
         return <HelpScreen userId={user.uid} />;
       default:
-        return <DashboardScreen userId={user.uid} />;
+        return <DashboardScreen userId={user.uid} user={user} />;
     }
   };
 
