@@ -6,11 +6,14 @@ import { db } from '../../App';
 
 export const DashboardScreen = ({ userId }) => {
   const [ledger, setLedger] = React.useState([]);
+  const [expenses, setExpenses] = React.useState([]);
 
   React.useEffect(() => {
     if (!userId) return;
-    const q = query(collection(db, `users/${userId}/ledger`));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
+    
+    // Ledger data
+    const ledgerQuery = query(collection(db, `users/${userId}/ledger`));
+    const unsubscribeLedger = onSnapshot(ledgerQuery, (snapshot) => {
       const data = snapshot.docs.map(doc => ({ 
         id: doc.id, 
         ...doc.data(), 
@@ -18,7 +21,22 @@ export const DashboardScreen = ({ userId }) => {
       }));
       setLedger(data);
     });
-    return () => unsubscribe();
+
+    // Expenses data
+    const expensesQuery = query(collection(db, `users/${userId}/expenses`));
+    const unsubscribeExpenses = onSnapshot(expensesQuery, (snapshot) => {
+      const data = snapshot.docs.map(doc => ({ 
+        id: doc.id, 
+        ...doc.data(), 
+        date: doc.data().date?.toDate() 
+      }));
+      setExpenses(data);
+    });
+
+    return () => {
+      unsubscribeLedger();
+      unsubscribeExpenses();
+    };
   }, [userId]);
 
   const totalRevenue = ledger
@@ -28,8 +46,11 @@ export const DashboardScreen = ({ userId }) => {
   const totalCost = ledger
     .filter(item => item.type === 'cost')
     .reduce((acc, item) => acc + parseFloat(item.amount || 0), 0);
+
+  const totalExpenses = expenses
+    .reduce((acc, item) => acc + parseFloat(item.amount || 0), 0);
   
-  const netProfit = totalRevenue - totalCost;
+  const netProfit = totalRevenue - totalCost - totalExpenses;
 
   const chartData = ledger
     .sort((a, b) => a.date - b.date)
@@ -55,7 +76,7 @@ export const DashboardScreen = ({ userId }) => {
       </Typography>
 
       {/* Stats Cards */}
-      <Stack direction="row" spacing={4} sx={{ mb: 6 }}>
+      <Stack direction="row" spacing={3} sx={{ mb: 6 }}>
         {/* Total Revenue Card */}
         <Card
           sx={{
@@ -107,7 +128,7 @@ export const DashboardScreen = ({ userId }) => {
                 fontFamily: "Manrope, Helvetica",
                 fontWeight: 800,
                 color: "#4ade80",
-                fontSize: "36px",
+                fontSize: "32px",
                 lineHeight: "normal",
               }}
             >
@@ -167,11 +188,71 @@ export const DashboardScreen = ({ userId }) => {
                 fontFamily: "Manrope, Helvetica",
                 fontWeight: 800,
                 color: "#f87171",
-                fontSize: "36px",
+                fontSize: "32px",
                 lineHeight: "normal",
               }}
             >
               ${totalCost.toFixed(2)}
+            </Typography>
+          </CardContent>
+        </Card>
+
+        {/* Total Expenses Card */}
+        <Card
+          sx={{
+            flex: 1,
+            height: "120px",
+            background: "linear-gradient(0deg, rgba(250,251,252,0.1) 0%, rgba(250,251,252,0.1) 100%), linear-gradient(90deg, rgba(240,240,240,0.2) 0%, rgba(240,240,240,0) 100%)",
+            border: "1px solid transparent",
+            borderRadius: "10px",
+            position: "relative",
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              inset: 0,
+              padding: "1px",
+              borderRadius: "10px",
+              background: "linear-gradient(90deg, rgba(62,121,229,1) 0%, rgba(1,184,227,1) 100%)",
+              WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+              WebkitMaskComposite: "xor",
+              maskComposite: "exclude",
+              zIndex: 1,
+              pointerEvents: "none",
+            },
+          }}
+        >
+          <CardContent sx={{ p: 3, height: "100%", display: "flex", flexDirection: "column", gap: 1 }}>
+            <Box sx={{ position: "relative" }}>
+              <Typography
+                sx={{
+                  fontFamily: "Sora, Helvetica",
+                  fontWeight: 400,
+                  color: "#d2e0f5",
+                  fontSize: "14px",
+                }}
+              >
+                Total Expenses
+              </Typography>
+              <Box
+                sx={{
+                  width: "20px",
+                  height: "3px",
+                  borderRadius: "5px",
+                  background: "linear-gradient(38deg, rgba(255,140,54,1) 0%, rgba(197,100,0,1) 100%)",
+                  mt: 1,
+                }}
+              />
+            </Box>
+            <Typography
+              sx={{
+                fontFamily: "Manrope, Helvetica",
+                fontWeight: 800,
+                color: "#ff8c36",
+                fontSize: "32px",
+                lineHeight: "normal",
+              }}
+            >
+              ${totalExpenses.toFixed(2)}
             </Typography>
           </CardContent>
         </Card>
@@ -229,7 +310,7 @@ export const DashboardScreen = ({ userId }) => {
                 fontFamily: "Manrope, Helvetica",
                 fontWeight: 800,
                 color: netProfit >= 0 ? "#01b8e3" : "#f87171",
-                fontSize: "36px",
+                fontSize: "32px",
                 lineHeight: "normal",
               }}
             >

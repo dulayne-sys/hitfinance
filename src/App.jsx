@@ -7,6 +7,7 @@ import { FileText, TrendingUp, DollarSign, BarChart2, LogIn, LogOut, PlusCircle,
 import { Box } from '@mui/material';
 import { DashboardScreen } from './screens/Dashboard/DashboardScreen';
 import { LedgerScreen } from './screens/Ledger/LedgerScreen';
+import { ExpenseScreen } from './screens/Expenses/ExpenseScreen';
 import { ForecastScreen } from './screens/Forecast/ForecastScreen';
 import { DocumentationScreen } from './screens/Documentation/DocumentationScreen';
 import { LoginScreen } from './screens/Login/LoginScreen';
@@ -83,6 +84,8 @@ export default function App() {
         return <DashboardScreen userId={user.uid} />;
       case 'ledger':
         return <LedgerScreen userId={user.uid} />;
+      case 'expenses':
+        return <ExpenseScreen userId={user.uid} />;
       case 'forecast':
         return <ForecastScreen userId={user.uid} />;
       case 'documentation':
