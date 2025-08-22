@@ -9,6 +9,7 @@ import { DashboardScreen } from './screens/Dashboard/DashboardScreen';
 import { LedgerScreen } from './screens/Ledger/LedgerScreen';
 import { ExpenseScreen } from './screens/Expenses/ExpenseScreen';
 import { ForecastScreen } from './screens/Forecast/ForecastScreen';
+import { AIAnalysisScreen } from './screens/AIAnalysis/AIAnalysisScreen.jsx';
 import { DocumentationScreen } from './screens/Documentation/DocumentationScreen';
 import { LoginScreen } from './screens/Login/LoginScreen';
 import { Sidebar } from './components/Sidebar/Sidebar';
@@ -88,6 +89,8 @@ export default function App() {
         return <ExpenseScreen userId={user.uid} />;
       case 'forecast':
         return <ForecastScreen userId={user.uid} />;
+      case 'ai-analysis':
+        return <AIAnalysisScreen userId={user.uid} />;
       case 'documentation':
         return <DocumentationScreen userId={user.uid} />;
       default:
