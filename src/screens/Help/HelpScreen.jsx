@@ -174,6 +174,31 @@ const pageGuides = [
       'Include dates and context in your documentation',
       'Regular documentation helps with compliance and audits'
     ]
+  },
+  {
+    id: 'moneyiq',
+    title: 'HitFinance MoneyIQ AI Chat',
+    icon: Brain,
+    color: '#9513fb',
+    description: 'Your personal AI financial advisor for real-time guidance',
+    features: [
+      'Real-time AI chat with financial context awareness',
+      'Personalized advice based on your actual financial data',
+      'Profit optimization recommendations and strategies',
+      'Industry benchmarking and performance comparisons',
+      'Quick suggestion prompts for common financial questions'
+    ],
+    howToUse: [
+      'Click the brain icon (floating button) on the Dashboard to open MoneyIQ',
+      'Ask questions about your finances, expenses, or revenue',
+      'Use quick suggestion chips for common topics',
+      'Minimize the chat to keep it accessible while working'
+    ],
+    tips: [
+      'MoneyIQ knows your current financial data - ask specific questions',
+      'Try asking "How can I reduce my expenses?" for targeted advice',
+      'Use it for quick financial health checks and optimization ideas'
+    ]
   }
 ];
 
@@ -213,6 +238,51 @@ const faqData = [
       {
         question: 'What do the different financial health scores mean?',
         answer: 'Scores are calculated based on profitability, cash flow, expense ratios, and growth trends. 80+ is excellent, 60-79 is good, 40-59 needs attention, and below 40 requires immediate action.'
+      },
+      {
+        question: 'How do I use HitFinance MoneyIQ?',
+        answer: 'MoneyIQ is your AI financial advisor available on the Dashboard. Click the brain icon to open the chat, then ask questions about your finances. It knows your current financial data and provides personalized advice to help make you more profitable.'
+      },
+      {
+        question: 'What kind of questions can I ask MoneyIQ?',
+        answer: 'You can ask about profit optimization, expense reduction, revenue growth strategies, cash flow management, tax planning, industry benchmarking, and any other financial questions. MoneyIQ provides context-aware advice based on your actual data.'
+      }
+    ]
+  },
+  {
+    category: 'HitFinance MoneyIQ AI Chat',
+    questions: [
+      {
+        question: 'How does MoneyIQ know about my financial situation?',
+        answer: 'MoneyIQ has access to your current financial data including revenue, costs, expenses, profit margins, and transaction history. This allows it to provide personalized, data-driven advice specific to your business situation.'
+      },
+      {
+        question: 'What makes MoneyIQ different from other financial chatbots?',
+        answer: 'MoneyIQ is specifically designed for HitFinance users and has deep integration with your financial data. It provides contextual advice based on your actual performance, not generic financial tips. It focuses specifically on profit optimization and business growth.'
+      },
+      {
+        question: 'Can MoneyIQ help me reduce my expenses?',
+        answer: 'Absolutely! MoneyIQ analyzes your expense breakdown and identifies your highest spending categories. It can suggest specific cost reduction strategies, subscription audits, and vendor negotiations based on your actual spending patterns.'
+      },
+      {
+        question: 'How often should I chat with MoneyIQ?',
+        answer: 'Use MoneyIQ whenever you have financial questions or need quick insights. Many users find it helpful for daily financial health checks, weekly expense reviews, and monthly strategic planning sessions.'
+      },
+      {
+        question: 'Does MoneyIQ remember our previous conversations?',
+        answer: 'Yes, MoneyIQ maintains conversation history during your session to provide contextual responses. However, conversation history resets when you close and reopen the chat for privacy and performance reasons.'
+      },
+      {
+        question: 'What if MoneyIQ gives me advice I disagree with?',
+        answer: 'MoneyIQ provides suggestions based on data analysis and industry best practices, but you should always use your business judgment. The AI is a tool to help inform your decisions, not replace your expertise about your business.'
+      },
+      {
+        question: 'Can MoneyIQ help with tax planning?',
+        answer: 'Yes! MoneyIQ can identify potential tax deductions based on your expense categories, suggest business expense optimizations, and provide general tax planning strategies. However, always consult with a qualified tax professional for specific tax advice.'
+      },
+      {
+        question: 'How does MoneyIQ compare my business to industry standards?',
+        answer: 'MoneyIQ uses built-in industry benchmarks to compare your profit margins, expense ratios, and growth rates against similar businesses. It can tell you if you\'re performing above or below industry averages and suggest improvements.'
       }
     ]
   },
@@ -303,7 +373,7 @@ export const HelpScreen = ({ userId }) => {
             </Typography>
             <Stack direction="row" spacing={2}>
               <Chip
-                label="6 Core Features"
+                label="7 Core Features"
                 sx={{
                   backgroundColor: "#c1f5af",
                   color: "#45b020",
@@ -315,6 +385,14 @@ export const HelpScreen = ({ userId }) => {
                 sx={{
                   backgroundColor: "#e6ccff",
                   color: "#9513fb",
+                  fontSize: "12px"
+                }}
+              />
+              <Chip
+                label="MoneyIQ Chat"
+                sx={{
+                  backgroundColor: "#fdbcff",
+                  color: "#d22cd6",
                   fontSize: "12px"
                 }}
               />
@@ -440,14 +518,67 @@ export const HelpScreen = ({ userId }) => {
                 <Typography sx={{ color: "#9513fb", fontSize: "24px", fontWeight: 700 }}>3</Typography>
               </Box>
               <Typography variant="h6" sx={{ color: "white", textAlign: "center" }}>
-                Plan Ahead
+                Get AI Guidance
               </Typography>
               <Typography sx={{ color: "#d2e0f5", fontSize: "12px", textAlign: "center" }}>
-                Use Forecasting to plan future finances and implement optimization recommendations
+                Chat with MoneyIQ for personalized financial advice and profit optimization tips
               </Typography>
             </Stack>
           </Grid>
         </Grid>
+      </Card>
+
+      {/* MoneyIQ Highlight Card */}
+      <Card sx={{ p: 4, background: "linear-gradient(135deg, rgba(149,19,251,0.1) 0%, rgba(210,44,214,0.1) 100%)" }}>
+        <Stack direction="row" alignItems="center" spacing={3}>
+          <Box
+            sx={{
+              width: 60,
+              height: 60,
+              borderRadius: "50%",
+              background: "linear-gradient(45deg, #9513fb, #d22cd6)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <Brain size={28} color="white" />
+          </Box>
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="h5" sx={{ color: "white", mb: 1 }}>
+              Meet HitFinance MoneyIQ
+            </Typography>
+            <Typography sx={{ color: "#d2e0f5", fontSize: "14px", mb: 2 }}>
+              Your personal AI financial advisor that knows your business inside and out. Available 24/7 on your Dashboard to help optimize profitability and answer financial questions.
+            </Typography>
+            <Stack direction="row" spacing={2}>
+              <Chip
+                label="Context-Aware"
+                sx={{
+                  backgroundColor: "#fdbcff",
+                  color: "#d22cd6",
+                  fontSize: "10px"
+                }}
+              />
+              <Chip
+                label="Profit-Focused"
+                sx={{
+                  backgroundColor: "#c1f5af",
+                  color: "#45b020",
+                  fontSize: "10px"
+                }}
+              />
+              <Chip
+                label="Real-time Data"
+                sx={{
+                  backgroundColor: "#a6d6f8",
+                  color: "#1092ef",
+                  fontSize: "10px"
+                }}
+              />
+            </Stack>
+          </Box>
+        </Stack>
       </Card>
     </Stack>
   );
